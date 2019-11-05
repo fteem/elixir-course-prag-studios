@@ -8,16 +8,16 @@ defmodule Servy.SensorServer do
   end
 
   def start_link(interval) do
-    IO.puts "Starting the sensor server..."
+    IO.puts("Starting the sensor server...")
     GenServer.start_link(__MODULE__, %State{refresh_interval: interval}, name: @name)
   end
 
   def get_sensor_data do
-    GenServer.call @name, :get_sensor_data
+    GenServer.call(@name, :get_sensor_data)
   end
 
   def set_refresh_interval(interval) do
-    GenServer.cast @name, {:set_interval, interval}
+    GenServer.cast(@name, {:set_interval, interval})
   end
 
   # Server Callbacks
@@ -25,7 +25,7 @@ defmodule Servy.SensorServer do
   def init(state) do
     sensor_data = run_tasks_to_get_sensor_data()
     schedule_refresh(state.refresh_interval)
-    {:ok, %{ state | sensor_data: sensor_data }}
+    {:ok, %{state | sensor_data: sensor_data}}
   end
 
   def handle_call(:get_sensor_data, _from, state) do
@@ -34,14 +34,14 @@ defmodule Servy.SensorServer do
 
   def handle_cast({:set_interval, interval}, state) do
     schedule_refresh(interval)
-    {:noreply, %{ state | refresh_interval: interval }}
+    {:noreply, %{state | refresh_interval: interval}}
   end
 
   def handle_info(:refresh, state) do
-    IO.puts "Refreshing the cache..."
+    IO.puts("Refreshing the cache...")
     new_data = run_tasks_to_get_sensor_data()
     schedule_refresh(state.refresh_interval)
-    {:noreply, %{ state | sensor_data: new_data }}
+    {:noreply, %{state | sensor_data: new_data}}
   end
 
   defp schedule_refresh(interval) do
@@ -58,6 +58,6 @@ defmodule Servy.SensorServer do
 
     bigfoot_location = Task.await(task)
 
-    %{ snapshots: snapshots, location: bigfoot_location }
+    %{snapshots: snapshots, location: bigfoot_location}
   end
 end

@@ -10,7 +10,8 @@ defmodule Servy.Client do
 
     {:ok, sock} = :gen_tcp.connect('localhost', 4000, [:binary, packet: :raw, active: false])
     :ok = :gen_tcp.send(sock, data)
-    {:ok, response} = :gen_tcp.recv(sock, 0) # Read all bytes
+    # Read all bytes
+    {:ok, response} = :gen_tcp.recv(sock, 0)
     :ok = :gen_tcp.close(sock)
     response
   end

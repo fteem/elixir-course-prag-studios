@@ -2,14 +2,14 @@ defmodule Servy.Supervisor do
   use Supervisor
 
   def start_link(_arg) do
-    IO.puts "Starting THE supervisor..."
+    IO.puts("Starting THE supervisor...")
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
   def init(:ok) do
     children = [
       Servy.KickStarter,
-      Servy.ServicesSupervisor,
+      Servy.ServicesSupervisor
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

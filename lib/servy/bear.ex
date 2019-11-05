@@ -1,7 +1,7 @@
 defmodule Servy.Bear do
-  alias Servy.Bear 
+  alias Servy.Bear
 
-  @db_path Path.expand("db", File.cwd!)
+  @db_path Path.expand("db", File.cwd!())
 
   defstruct id: nil, name: "", hibernating: false, type: ""
 
@@ -14,11 +14,11 @@ defmodule Servy.Bear do
   end
 
   def get(id) when is_binary(id) do
-    id |> String.to_integer |> get
+    id |> String.to_integer() |> get
   end
 
   def get(id) when is_integer(id) do
-    Enum.find(all(), fn(b) -> b.id == id end)
+    Enum.find(all(), fn b -> b.id == id end)
   end
 
   def is_grizzly(bear) do
@@ -27,11 +27,11 @@ defmodule Servy.Bear do
 
   defp read_json(file_path) do
     case File.read(file_path) do
-      { :ok, contents } ->
+      {:ok, contents} ->
         contents
 
-      { :error, reason } ->
-        IO.inspect "Error reading #{file_path}: #{reason}"
+      {:error, reason} ->
+        IO.inspect("Error reading #{file_path}: #{reason}")
         "[]"
     end
   end

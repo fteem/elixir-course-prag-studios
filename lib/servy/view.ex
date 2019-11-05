@@ -7,6 +7,6 @@ defmodule Servy.View do
       |> Path.join(template)
       |> EEx.eval_file(bindings)
 
-    %{ conv | status: 200, resp_body: content }
+    %{conv | status: 200, resp_body: content}
   end
 end

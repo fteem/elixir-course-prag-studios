@@ -13,6 +13,7 @@ defmodule Servy.FourOhFourCounter do
   def get_counts, do: GenServer.call(@name, :counts)
 
   def handle_cast(:reset, _state), do: {:noreply, %{}}
+
   def handle_cast({:bump, path}, state) do
     count = Map.get(state, path, 0)
     new_state = Map.put(state, path, count + 1)
@@ -24,5 +25,6 @@ defmodule Servy.FourOhFourCounter do
     new_state = Map.put(state, path, count + 1)
     {:reply, count, new_state}
   end
+
   def handle_call(:counts, _from, state), do: {:reply, state, state}
 end

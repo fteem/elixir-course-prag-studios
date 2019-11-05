@@ -5,7 +5,7 @@ defmodule Servy.Parser do
   def parse(request) do
     [top, body] = String.split(request, "\r\n\r\n")
 
-    [request_line | header_lines ] = String.split(top, "\r\n")
+    [request_line | header_lines] = String.split(top, "\r\n")
 
     [method, path, _] = String.split(request_line, " ")
 
@@ -22,7 +22,7 @@ defmodule Servy.Parser do
   end
 
   def parse_headers(header_lines) do
-    Enum.reduce(header_lines, %{}, fn(header_line, acc) -> 
+    Enum.reduce(header_lines, %{}, fn header_line, acc ->
       [key, value] = String.split(header_line, ": ")
       Map.put(acc, key, value)
     end)
@@ -33,7 +33,7 @@ defmodule Servy.Parser do
   a JSON format.
 
   ## Examples
-  
+
     iex> Servy.Parser.parse_params("application/x-www-form-urlencoded", "name=Yogi&type=brown")
     %{"name" => "Yogi", "type" => "brown"}
 
@@ -44,12 +44,14 @@ defmodule Servy.Parser do
     %{}
   """
   def parse_params("application/x-www-form-urlencoded", params) do
-    params |> String.trim |> URI.decode_query
+    params |> String.trim() |> URI.decode_query()
   end
+
   def parse_params("application/json", params) do
     params
-    |> String.trim
-    |> Poison.decode!
+    |> String.trim()
+    |> Poison.decode!()
   end
+
   def parse_params(_, _), do: %{}
 end

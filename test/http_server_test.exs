@@ -14,8 +14,8 @@ defmodule HttpServerTest do
       "http://localhost:4000/wildthings",
       "http://localhost:4000/wildthings"
     ]
-    |> Enum.map(fn(url) -> Task.async(fn -> HTTPoison.get(url) end) end)
+    |> Enum.map(fn url -> Task.async(fn -> HTTPoison.get(url) end) end)
     |> Enum.map(&Task.await/1)
-    |> Enum.map(fn ({:ok, response}) -> assert response.status_code == 200 end)
+    |> Enum.map(fn {:ok, response} -> assert response.status_code == 200 end)
   end
 end

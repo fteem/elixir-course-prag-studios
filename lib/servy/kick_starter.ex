@@ -12,7 +12,7 @@ defmodule Servy.KickStarter do
   end
 
   def get_server do
-    GenServer.call __MODULE__, {:call, :get_server}
+    GenServer.call(__MODULE__, {:call, :get_server})
   end
 
   def handle_call(:get_server, _from, server_pid) do
@@ -20,13 +20,13 @@ defmodule Servy.KickStarter do
   end
 
   def handle_info({:EXIT, _pid, reason}, _state) do
-    IO.puts "HttpServer exited: #{inspect reason}"
+    IO.puts("HttpServer exited: #{inspect(reason)}")
     server_pid = start_server
     {:noreply, server_pid}
   end
 
   defp start_server do
-    IO.puts "Starting the HTTP server..."
+    IO.puts("Starting the HTTP server...")
     port = Application.get_env(:servy, :port)
     server_pid = spawn_link(Servy.HttpServer, :start, [port])
     Process.register(server_pid, :http_server)
