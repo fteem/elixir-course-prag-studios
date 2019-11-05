@@ -7,8 +7,8 @@ defmodule Servy.PledgeServer do
     defstruct cache_size: 3, pledges: []
   end
 
-  def start do
-    GenServer.start(__MODULE__, %State{}, name: @name)
+  def start_link(_arg) do
+    GenServer.start_link(__MODULE__, %State{}, name: @name)
   end
 
   def set_cache_size(size), do: GenServer.cast @name, {:set_cache_size, size}

@@ -3,8 +3,8 @@ defmodule Servy.FourOhFourCounter do
 
   use GenServer
 
-  def start(state \\ %{}) do
-    GenServer.start(__MODULE__, state, name: @name)
+  def start_link(_arg) do
+    GenServer.start(__MODULE__, %{}, name: @name)
   end
 
   def reset, do: GenServe.cast(@name, :reset)
